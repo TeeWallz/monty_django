@@ -1,0 +1,67 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How Many Days Since The Montague Street Bridge Has Been Hit?</title>
+    
+  </head>
+  <body>
+    <div class="container">
+      <!-- Menu on the left -->
+      <div class="menu">
+        {% include "1990/_menu.html" %}
+      </div>
+
+      <!-- Draggable divider with 3D look -->
+      <div class="divider" id="divider"></div>
+
+      <!-- Content area -->
+      <div class="layout_content">
+        <!-- <DateBar /> -->
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+
+    <script>
+      // Get references to the divider and the menu
+      const divider = document.getElementById("divider");
+      const menu = document.querySelector(".menu");
+
+      // Flag to track whether dragging is active
+      let isDragging = false;
+
+      // Event listener for mouse down on the divider
+      divider.addEventListener("mousedown", e => {
+        isDragging = true;
+        document.addEventListener("mousemove", onMouseMove);
+        document.addEventListener("mouseup", onMouseUp);
+      });
+
+      // Function to handle mouse movement during dragging
+      function onMouseMove(e) {
+        if (!isDragging) return;
+
+        // Calculate new width for the menu
+        const newWidth = e.clientX - menu.getBoundingClientRect().left;
+
+        // Set a minimum and maximum width for the menu
+        const minWidth = 150; // Minimum width for the menu
+        const maxWidth = 1000; // Maximum width for the menu
+
+        if (newWidth >= minWidth && newWidth <= maxWidth) {
+          menu.style.width = `${newWidth}px`;
+        }
+      }
+
+      // Function to stop dragging
+      function onMouseUp() {
+        isDragging = false;
+        document.removeEventListener("mousemove", onMouseMove);
+        document.removeEventListener("mouseup", onMouseUp);
+      }
+    </script>
+  </body>
+</html>

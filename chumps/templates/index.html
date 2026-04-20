@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+{% comment %} ---
+import Layout from "@layouts/2010Layout.astro";
+
+import { getChumpData } from "@utils/getChumps";
+const chumpData = await getChumpData();
+
+const cooLinks = [
+  {
+    name: "Why Do Trucks Keep Smashing Into This Bridge?",
+    url: "https://www.youtube.com/watch?v=HR7NivKqfzo",
+  },
+  {
+    name: "Montague st Bridge by David Cosma",
+    url: "https://www.youtube.com/watch?v=jaUo1KXIU1k",
+  },
+];
+--- {% endcomment %}
+
+<link title="timeline-styles" rel="stylesheet" 
+              href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
+
+<script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js" is:inline></script>
+
+<script type="text/javascript" is:inline>
+    // Wait for DOM and external script to be loaded before initializing Timeline
+    window.addEventListener('DOMContentLoaded', function () {
+      function initTimeline() {
+        console.log('Attempting to initialize Timeline');
+        if (typeof TL !== 'undefined' && typeof TL.Timeline !== 'undefined') {
+            console.log('Timeline library is available');
+            // Fetch JSON data from the provided URL and initialize Timeline
+            fetch('/api/timeline.json')
+              .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+              })
+              .then(timeline_json => {
+                  var options = {
+                    hash_bookmark: false,
+                    initial_zoom: 4,
+                    timenav_height_percentage: 40
+                  }
+                window.timeline = new TL.Timeline('timeline-embed', timeline_json, options);
+              })
+              .catch(error => {
+                console.error('Failed to load timeline data:', error);
+              });
+        } else {
+          setTimeout(initTimeline, 100);
+        }
+      }
+      initTimeline();
+    });
+</script>
+
+<Layout>
+  <!-- Day Counter -->
+  <div class="section section-width">
+    <img
+      src="{% static 'images/2010/general/FRboxing.gif' %}"
+      style="position: absolute; margin-right: 245px;"
+    />
+
+    <div class="day-counter-wrapper">
+      <img class="wreath" src="{% static 'images/2010/general/wreath.png' %}" />
+      <div class="day-counter">{{ chumps.0.streak }}</div>
+    </div>
+
+    <div class="common-big-text">
+      {% comment %} As of {{ chumps.0.localisedDate }} {% endcomment %}
+    </div>
+  </div>
+
+  <!-- Latest chump -->
+  <div class="section section-width">
+    <div class="common-header-text">
+      Current ''''<span
+        ><img src="{% static 'images/2010/general/championredflaming2.gif' %}" /></span
+      >''''
+    </div>
+    <div class="chump-image-frame">
+      <div class="chump-image-container">
+        <img class="frame-ribbon" src="{% static 'images/2010/general/ribbon.png' %}" />
+        <!-- Dynamic Image/Video -->
+        <!-- {x% if extension == 'webm' %} -->
+        <!-- <video width="320" height="320" autoplay muted loop> -->
+        <!-- <source src="{ chumps[0].image }}" type="video/webm" /> -->
+        <!-- Your browser does not support the video tag. -->
+        <!-- </video> -->
+        <!-- {x% else %} -->
+        <img class="chump-image" src="{{ chumps.0.media.0.url }}" />
+        <!-- {x% endif %} -->
+      </div>
+      
+
+      <img class="candle candle-left" src="{% static 'images/2010/general/candle.gif' %}" />
+      <img class="candle candle-right" src="{% static 'images/2010/general/candle.gif' %}" />
+    </div>
+    <div class="chump-name common-big-text">
+      <a href="{{ chumps.0.url }}" target="_blank">{{ chumps.0.name }}</a>
+    </div>
+  </div>
+  <!-- Stats -->
+  <div class="section section-width">
+    <div class="common-header-text">Stats</div>
+
+    <div class="stats-wrapper">
+      <!-- Left Image -->
+      <div class="stats-image-div">
+        <img
+          class="stats-image"
+          src="{% static 'images/2010/general/m_monster_scribbling_notes_md_nwm_v2.gif' %}"
+        />
+      </div>
+
+      <!-- Stats Table -->
+      <div>
+        <table class="stats-table">
+          <tbody>
+            <tr>
+              <td class="text-align-right">Days Since Last:</td>
+              <td
+                >{{ chumps.0.streak }}{% if chumps.0.streak == 1 %} day{% else %} days{% endif %}</td
+              >
+            </tr>
+            <tr>
+              <td class="text-align-right">Last bout date:</td>
+              <td>{{ chumps.0.localised_date }}</td>
+            </tr>
+            <tr>
+              <td class="text-align-right">Current Status:</td>
+              <td>{{ streak_status }}</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="text-align-right">Average Streak:</td>
+              <td>{{ stats.average }} days</td>
+            </tr>
+            <tr>
+              <td class="text-align-right">Median Streak:</td>
+              <td>{{ stats.median }} days</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Right Image -->
+      <div class="stats-image-div">
+        <img
+          class="stats-image"
+          src="{% static 'images/2010/general/mad_scientist_with_clipboard_anim_300_wht.gif' %}"
+          style="transform: scaleX(-1); -webkit-transform: scaleX(-1);"
+        />
+      </div>
+    </div>
+  </div>
+  <!-- Timeline -->
+
+<!-- History Section -->
+<div class="section section-width" style="padding-bottom: 50px;">
+  <div class="timeline-section">
+    <div class="timeline-toggle-wrapper">
+    <button id="timeline-toggle" class="timeline-toggle">View Fullscreen</button>
+    </div>
+    <div class="timeline-outer">
+      <div id="timeline-embed"></div>
+    </div>
+    <button id="timeline-close" class="timeline-close">✕ Close</button>
+  </div>
+</div>
+  
+<script is:inline>
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize timeline
+  const initTimeline = () => {
+    if (typeof TL !== 'undefined') {
+      fetch('/api/timeline.json')
+        .then(response => response.json())
+        .then(data => {
+          window.timeline = new TL.Timeline(
+            'timeline-embed', 
+            data, 
+            {
+              hash_bookmark: false,
+              initial_zoom: 4,
+              timenav_height_percentage: 40
+            }
+          );
+        });
+    } else {
+      setTimeout(initTimeline, 100);
+    }
+  };
+  initTimeline();
+
+  // Fullscreen controls
+  const toggleBtn = document.getElementById('timeline-toggle');
+  const closeBtn = document.getElementById('timeline-close');
+  const timelineOuter = document.querySelector('.timeline-outer');
+  const body = document.body;
+
+  const enterFullscreen = () => {
+    timelineOuter.classList.add('timeline-fullscreen');
+    body.style.overflow = 'hidden';
+    toggleBtn.classList.add('timeline-toggle-fullscreen');
+    toggleBtn.textContent = 'Exit Fullscreen';
+    toggleBtn.removeEventListener('click', enterFullscreen);
+    toggleBtn.addEventListener('click', exitFullscreen);
+    if (window.timeline) {
+      setTimeout(() => window.timeline.updateDisplay(), 400);
+    }
+  };
+
+  const exitFullscreen = () => {
+    timelineOuter.classList.remove('timeline-fullscreen');
+    toggleBtn.classList.remove('timeline-toggle-fullscreen');
+    toggleBtn.textContent = 'View Fullscreen';
+    toggleBtn.removeEventListener('click', exitFullscreen);
+    toggleBtn.addEventListener('click', enterFullscreen);
+    body.style.overflow = '';
+    if (window.timeline) {
+      setTimeout(() => window.timeline.updateDisplay(), 100);
+    }
+  };
+
+  toggleBtn.addEventListener('click', enterFullscreen);
+  closeBtn.addEventListener('click', exitFullscreen);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && timelineOuter.classList.contains('timeline-fullscreen')) {
+      exitFullscreen();
+    }
+  });
+});
+</script>
+
+<!-- Links -->
+<div class="section section-width">
+    <div class="common-header-text">Links which what I found cool</div>
+
+    <ul class="links-list">
+        <li>
+            <a target="_blank" href="https://www.youtube.com/watch?v=HR7NivKqfzo">Why Do Trucks Keep Smashing Into This Bridge?</a>
+        </li>
+        <li>
+            <a target="_blank" href="https://www.youtube.com/watch?v=jaUo1KXIU1k">Montague st Bridge by David Cosma</a>
+        </li>
+    </ul>
+</div>
+</Layout>
+{% endblock content %}

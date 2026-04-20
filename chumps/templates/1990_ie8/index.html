@@ -1,0 +1,300 @@
+{% extends "1990/_layout.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/1990/main.css' %}" />
+
+  <div>
+    <div class="main">
+      <img
+        src="{% static 'images/general/monty_irl.png' %}"
+        style="max-width: 100%; height: auto; display: block;max-width: 805px;"
+      />
+      
+      <img src="{% static 'images/1990/l017.gif' %}" border="0" />
+      <img
+        src="{% static 'images/1990/HeHeartlandForest8728imagesunderconstruction3.gif' %}"
+        border="0"
+      />
+      <div
+        id="content"
+        style=""
+      >
+        <p align="center">
+          <u>
+            ><b>
+              <marquee
+                style="font-family: Monotype Corsiva; color: #FF9900; font-size: 36pt"
+                behavior="alternate"
+                width="543"
+                height="57"
+                >Welcome to my website about the montague street bridge!</marquee
+              >
+            </b></u
+          >
+        </p>
+
+        <table border="" width="100%" background="{% static 'images/1990/Skeleton1.gif' %}">
+          <tbody>
+            <tr bgcolor="#000000">
+              <td colspan="3">
+                <center>
+                  <font color="#FF0000" size="+3"
+                    >how many days since the montague street bridge was hit?</font
+                  >
+                </center>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <center>
+                  <font color="#CC0000">
+                    <font size="+3">
+                      <img
+                        src="{% static 'images/1990/knight1.gif' %}"
+                        alt="cool knight"
+                        height="94"
+                        width="138"
+                      />
+                    </font>
+                  </font>
+                </center>
+              </td>
+
+              <td>
+                <center>
+                  <p align="center">
+                    <!-- add wierd geocitied effect to this text -->
+                    <font size="7" face="Arial, Helvetica, sans-serif"
+                      ><b>
+                        <font
+                          color="#006633"
+                          style="text-shadow: 2px 2px 2px #ff008f; font-size: 36pt; font-family: Monotype Corsiva; color: #FF9900;"
+                        >
+                          {{ chumps.0.streak }}{% if chumps.0.streak == 1 %} day{% else %} days{% endif %}
+                        </font>
+                      </b></font
+                    >
+                  </p>
+                </center>
+              </td>
+
+              <td>
+                <center>
+                  <font color="#CC0000">
+                    <font size="+3">
+                      <img
+                        src="{% static 'images/1990/knight2.gif' %}"
+                        alt="cool knight"
+                        height="94"
+                        width="138"
+                      />
+                    </font>
+                  </font>
+                </center>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <left>
+                  <img
+                    src="{% static 'images/general/mouseshootoff.gif' %}"
+                    alt="cool knight"
+                    height="94"
+                    width="138"
+                  />
+                </left>
+              </td>
+
+              <td>
+                <center>
+                  <table>
+                    <tr>
+                      <td>
+                        <img
+                          src="{% static 'images/1990/dragon4.gif' %}"
+                          alt="cool truck"
+                          height="100"
+                          width="40"
+                          style="float: left;"
+                        />
+                        <img
+                          src="{% static 'images/1990/dragon4.gif' %}"
+                          alt="cool truck"
+                          height="100"
+                          width="40"
+                          style="float: left;"
+                        />
+                      </td>
+                      <td>
+                        <img
+                          src="{% static 'images/chumps/2024-10-18.png' %}"
+                          alt="cool truck"
+                          height="300"
+                          width="300"
+                          style="float: right;"
+                        />
+                      </td>
+                      <td>
+                        <img
+                          src="{% static 'images/1990/dragon4.gif' %}"
+                          alt="cool truck"
+                          height="100"
+                          width="40"
+                          style="float: left;"
+                        />
+                        <img
+                          src="{% static 'images/1990/dragon4.gif' %}"
+                          alt="cool truck"
+                          height="100"
+                          width="40"
+                          style="float: left;"
+                        />
+                      </td>
+                    </tr>
+                  </table>
+                </center>
+              </td>
+
+              <td>
+                <right>
+                  <img
+                    src="{% static 'images/1990/4764eb381d20c7c38f4967663a200524908bc649.gif' %}"
+                    alt="cool knight"
+                    height="94"
+                    width="138"
+                  />
+                </right>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div
+          style="background-color: #FF9900; color: #FFFFFF; font-size: 36pt; font-family: Monotype Corsiva; text-align: center;"
+        >
+          <a href="{{ chumps.0.data.url }}" style="color: #FFFFFF; text-decoration: none;">
+            {{ chumps.0.name }}
+          </a>
+          <br />
+          {{ chumps.0.localisedDate }}
+        </div>
+
+        <img src="{% static 'images/general/tx14welcome.jpg' %}" border="0" />
+        <img src="{% static 'images/general/thanks.gif' %}" border="0" />
+
+        <br />
+        <br />
+        <br />
+        <br />
+
+        <div
+          style="background-color: #000000; padding: 20px; font-family: Arial, sans-serif;"
+        >
+          <marquee scrollamount="3" behavior="alternate">
+            <span style="color: #FF0000; font-size: 32px;">
+              ***!!! WELCOME TO MY HOMEPAGE !!!***
+            </span>
+          </marquee>
+
+          <div
+            style="border: 3px dashed #00FF00; padding: 15px; margin: 10px; background-color: #000066;"
+          >
+            <span style="color: #FFFF00; font-size: 24px;">
+              ~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
+            </span>
+            <br />
+            <span style="color: #FF00FF; font-size: 20px;">
+              HELLO AND WELCOME!
+            </span>
+            <br /><br />
+            <span style="color: #FFFF00; font-size: 24px;">
+              ~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
+            </span>
+            <br /><br />
+            <span style="color: #00FF00; font-size: 18px;">
+              .:[ THIS SITE HAS BEEN MADE BY MYSELF ]:.
+            </span>
+            <br />
+            <span style="color: #00FF00; font-size: 18px;">
+              .:[ WITH THE HELP OF SOME ONLINE FACILITIES ]:.
+            </span>
+            <br />
+            <span style="color: #FF3366; font-size: 20px; font-weight: bold;">
+              ***[ TO PROVIDE EXCELLENT GRAPHICS ]***
+            </span>
+          </div>
+
+          <p align="center">
+            <font color="#FFFFFF" size="5"
+              ><b
+                >Please feel free to use the links to left to view my wolf
+                graphics galleries and my dragon graphics galleries.</b
+              ></font
+            >
+          </p>
+
+          <marquee scrollamount="2" direction="right">
+            <span style="color: #FFFFFF; font-size: 18px;">
+              *** UNDER CONSTRUCTION *** UNDER CONSTRUCTION *** UNDER
+              CONSTRUCTION ***
+            </span>
+          </marquee>
+        </div>
+
+        <table border="0" width="100%" style="background-color: cornflowerblue">
+          <tbody>
+            <tr>
+              <td align="center" width="25%"
+                ><a href="/1990/mycats"><strong>My cats</strong></a></td
+              >
+              <!-- <td align="center" width="25%"
+                ><a href="catphoto.html"><strong>Cat photo</strong></a></td
+              > -->
+              <td align="center" width="25%"
+                ><a href="/1990/wpaper"><strong>Cat wallpaper</strong></a></td
+              >
+              <td align="center" width="25%"
+                ><strong
+                  ><a
+                    href="https://www.geocities.ws/miki_toshe/funny_cats.html"
+                    target="_blank">Cat link</a>
+                  </strong
+                ></td
+              >
+            </tr>
+            <tr>
+              <!-- <td align="center" width="25%"
+                ><strong><a href="myaward.htm">My awards</a></strong></td
+              > -->
+              <td align="center" width="25%"
+                ><strong
+                  ><a href="https://www.ultraguest.com/view/1734986805"
+                    >Sign my guestbook</a
+                  ></strong
+                ></td
+              >
+              <td align="center" width="25%"
+                ><strong
+                  ><a href="https://www.ultraguest.com/view/1734986805"
+                    >View my guestbook</a
+                  ></strong
+                ></td
+              >
+              <td align="center" width="25%"><strong></strong></td>
+            </tr>
+            <tr>
+              <td align="center"><strong></strong></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <br/><br/>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

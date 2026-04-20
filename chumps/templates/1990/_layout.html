@@ -1,0 +1,193 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>How Many Days Since The Montague Street Bridge Has Been Hit?</title>
+    <style>
+      /* Base responsive styles */
+      * {
+        box-sizing: border-box;
+      }
+      
+      body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+      
+      .container {
+        display: flex;
+        flex-direction: row;
+        min-height: 100vh;
+      }
+      
+      /* Mobile-first menu */
+      .menu {
+        width: 250px;
+        background-color: #333;
+        transition: transform 0.3s ease;
+        overflow-y: auto;
+        max-height: 100vh;
+        position: sticky;
+        top: 0;
+      }
+      
+      /* Hide menu by default on mobile */
+      @media (max-width: 768px) {
+        .menu {
+          position: fixed;
+          left: 0;
+          top: 0;
+          height: 100vh;
+          z-index: 1000;
+          transform: translateX(-100%);
+          width: 280px;
+        }
+        
+        .menu.open {
+          transform: translateX(0);
+          box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+        }
+        
+        /* Menu toggle button for mobile */
+        .menu-toggle {
+          display: fixed;
+          position: fixed;
+          top: 10px;
+          left: 10px;
+          z-index: 1001;
+          background: #c0c0c0;
+          color: black;
+          border: 2px outset #ffffff;
+          border-right-color: #808080;
+          border-bottom-color: #808080;
+          padding: 8px 12px;
+          cursor: pointer;
+          font-size: 18px;
+          font-family: 'Courier New', 'MS Sans Serif', monospace;
+          font-weight: bold;
+          border-radius: 0px;
+          box-shadow: none;
+          text-transform: uppercase;
+        }
+      }
+      
+      @media (min-width: 769px) {
+        .menu-toggle {
+          display: none;
+        }
+      }
+      
+      .divider {
+        width: 5px;
+        background-color: #ccc;
+        cursor: ew-resize;
+        position: relative;
+      }
+      
+      @media (max-width: 768px) {
+        .divider {
+          display: none;
+        }
+      }
+      
+      .layout_content {
+        flex: 1;
+        overflow-x: auto;
+        padding: 10px;
+      }
+
+      
+      /* Responsive images */
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      
+      /* Responsive marquee */
+
+    </style>
+  </head>
+  <body>
+    <!-- Mobile menu toggle button -->
+    <button class="menu-toggle" id="menuToggle">☰ Menu</button>
+    
+    <div class="container">
+      <!-- Menu on the left -->
+      <div class="menu" id="menu">
+        {% include "1990/_menu.html" %}
+      </div>
+
+      <!-- Draggable divider with 3D look -->
+      <div class="divider" id="divider"></div>
+
+      <!-- Content area -->
+      <div class="layout_content">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+
+    <script>
+      // Mobile menu toggle
+      const menuToggle = document.getElementById('menuToggle');
+      const menu = document.querySelector('.menu');
+      
+      if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+          menu.classList.toggle('open');
+        });
+        
+        // Close menu when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+          if (window.innerWidth <= 768) {
+            if (!menu.contains(e.target) && !menuToggle.contains(e.target)) {
+              menu.classList.remove('open');
+            }
+          }
+        });
+      }
+      
+      // Draggable divider (only on desktop)
+      const divider = document.getElementById("divider");
+      if (divider) {
+        let isDragging = false;
+        
+        divider.addEventListener("mousedown", e => {
+          if (window.innerWidth > 768) {
+            isDragging = true;
+            document.addEventListener("mousemove", onMouseMove);
+            document.addEventListener("mouseup", onMouseUp);
+          }
+        });
+        
+        function onMouseMove(e) {
+          if (!isDragging) return;
+          
+          const newWidth = e.clientX - menu.getBoundingClientRect().left;
+          const minWidth = 150;
+          const maxWidth = window.innerWidth * 0.4; // Max 40% of viewport
+          
+          if (newWidth >= minWidth && newWidth <= maxWidth) {
+            menu.style.width = `${newWidth}px`;
+          }
+        }
+        
+        function onMouseUp() {
+          isDragging = false;
+          document.removeEventListener("mousemove", onMouseMove);
+          document.removeEventListener("mouseup", onMouseUp);
+        }
+      }
+      
+      // Handle resize
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+          menu.classList.remove('open');
+        }
+      });
+    </script>
+  </body>
+</html>

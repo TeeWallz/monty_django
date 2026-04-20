@@ -1,0 +1,65 @@
+{% load static %}
+<html>
+  <head>
+    <title>How Many Days Since The Montague Street Bridge Has Been Hit?</title>
+    <link rel="stylesheet" href="{% static 'index/monty.css' %}" />
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="RSS"
+      href="{% static 'rss.xml' %}"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <main>
+      <!-- geocities style menu top bar -->
+<div style="background-color: aqua; max-width: 500px; max-height: 150px; margin: auto;">
+  <div>Go back in time :^)</div>
+  <div
+    style="background-color: aqua; padding: 10px; border-radius: 5px; border: 1px solid black; display: flex; justify-content: space-around;"
+  >
+    <div
+      style="background-color:linen; padding: 5px; border-radius: 5px; border: 1px solid black; color: black;"
+    >
+      <a href="/1990">
+        <img src="{% static 'images/date_bar/1990.gif' %}" alt="1990" style="width: 100px;" />
+      </a>
+    </div>
+    <div
+      style="background-color:linen; padding: 5px; border-radius: 5px; border: 1px solid black; color: black;"
+    >
+      <a href="/">
+        <img src="{% static 'images/date_bar/2010.jpg' %}" alt="2010" style="width: 100px;" />
+      </a>
+    </div>
+  </div>
+</div>
+
+      <div class="section-width">
+        <img class="header-image" src="{% static 'images/2010/general/MontyHeader.png' %}" />
+      </div>
+      {% block content %}{% endblock %}
+      <div class="section-width section">
+        <div>
+          <span>Redesign heavily inspired by </span>
+          <a target="_blank" href="https://hiatus-hiatus.github.io/">
+            https://hiatus-hiatus.github.io/
+          </a>
+        </div>
+        <div>
+          <a target="_blank" href="https://github.com/TeeWallz/monty_balboa">
+            >View on Github</a
+          >
+        </div>
+        <div>
+          <a target="_blank" href="/rss.xml">RSS Feed</a>
+        </div>
+        <div>
+          <a target="_blank" href="/api/chumps/">"""API"""</a>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

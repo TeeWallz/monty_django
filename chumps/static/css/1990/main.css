@@ -1,0 +1,142 @@
+/* Reset some default styles */
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.layout_content {
+    flex: 1;
+    overflow-x: auto;
+    width: 100%;
+}
+
+/* Responsive main content */
+.main {
+    background: transparent url("/static/images/1990/padukcrbk.gif") repeat;
+    max-width: 100%;
+    padding: 10px;
+}
+
+/* Make content area responsive */
+#content {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+/* Responsive images in main content */
+.main img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Responsive tables */
+table {
+    width: 100%;
+    max-width: 100%;
+    /* display: block; */
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+/* Better table display on mobile */
+@media (max-width: 768px) {
+    table, tbody, tr, td {
+        /* display: block; */
+        width: 100%;
+    }
+    
+    tr {
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+    }
+    
+    td {
+        text-align: center;
+        padding: 10px;
+    }
+    
+    /* Keep specific centering */
+    td[align="center"], td center {
+        display: block;
+        text-align: center;
+    }
+}
+
+      
+/* Make tables responsive */
+table {
+    max-width: 100%;
+    display: block;
+    overflow-x: auto;
+}
+
+/* Responsive text sizing */
+@media (max-width: 768px) {
+    marquee[style*="font-size: 36pt"] {
+        font-size: 20pt !important;
+    }
+    
+    div[style*="font-size: 36pt"] {
+        font-size: 24pt !important;
+    }
+    
+    font[size="7"] {
+        font-size: 24px !important;
+    }
+}
+
+/* Make the "days since" text responsive */
+font[size="7"] b font {
+    font-size: clamp(24px, 8vw, 48px) !important;
+}
+
+/* Responsive colored divs */
+div[style*="background-color"] {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+/* Fix layout for mobile */
+@media (max-width: 768px) {
+    .main {
+        padding: 5px;
+    }
+    
+    #content {
+        padding: 5px;
+    }
+    
+    /* Stack images in tables on mobile */
+    td img {
+        max-width: 80px;
+        height: auto;
+    }
+}
+
+/* Touch-friendly links */
+a {
+    touch-action: manipulation;
+}
+
+/* Better tap targets on mobile */
+@media (max-width: 768px) {
+    a, button, .clickable {
+        min-height: 44px;
+        min-width: 44px;
+        display: inline-flex;
+        align-items: center;
+    }
+}
+

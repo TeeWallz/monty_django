@@ -1,0 +1,204 @@
+/* history.css - Standard grey retro borders for history page */
+
+/* Navigation buttons container */
+.history-nav-buttons {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.history-nav-buttons img {
+  cursor: pointer;
+}
+
+.history-nav-buttons img:first-child {
+  margin-right: 10px;
+}
+
+/* Instructions banner */
+.history-instructions {
+  text-align: center;
+  margin-bottom: 20px;
+  background-color: #000;
+}
+
+.history-instructions font {
+  font-family: arial, helvetica;
+  color: #ffffff;
+  font-size: larger;
+}
+
+/* Header table - standard grey borders */
+.history-header-table {
+  background-color: #f7ff00;
+  border-collapse: separate;
+  border-spacing: 2px;
+}
+
+.history-header-table td {
+  padding: 4px;
+}
+
+.history-header-title img {
+  height: 70px;
+}
+
+/* Year group table - standard grey borders */
+.retro-year-table {
+  background-color: #640000;
+  border-collapse: separate;
+  border-spacing: 2px;
+  width: 607px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+/* border between rows */
+.retro-year-table tr {
+  border-bottom: 2px solid #f7ff00;
+}
+
+/* Default grey cell borders */
+.retro-year-table td {
+  padding: 4px;
+}
+
+/* Year header with sparkle background */
+.retro-year-header {
+  background-image: url('/static/images/1990/sparklebackground.gif');
+  background-repeat: repeat-x;
+}
+
+.retro-year-header td {
+  border: none; /* No border on header cell to keep it seamless */
+}
+
+.retro-separator-row {
+    height: 2px;
+}
+
+.retro-separator-cell {
+    /* make it looks like a geocities border, but not too bright */
+    background-color: #370000;
+    height: 2px;
+}
+
+.cobweb-left {
+  float: left;
+  height: 70px;
+}
+
+.cobweb-right {
+  float: right;
+  height: 70px;
+}
+
+.year-icon-left,
+.year-icon-right {
+  height: 70px;
+}
+
+.year-text {
+  color: #ffffff;
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+/* Chump cell styling */
+.retro-image-cell {
+  width: 153px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.history-chump-image {
+  width: 150px;
+  height: 150px;
+}
+
+.retro-name-cell,
+.retro-date-cell,
+.retro-streak-cell {
+  width: 442px;
+  padding: 5px;
+}
+
+/* Text styling */
+.retro-name-cell a {
+  color: greenyellow;
+  text-decoration: none;
+  font-size: large;
+}
+
+.retro-name-cell a:hover {
+  text-decoration: underline;
+}
+
+.retro-date-cell,
+.retro-streak-cell {
+  color: #ffffff;
+  font-size: small;
+}
+
+/* Horizontal rule styling */
+.history-hr {
+  width: 100%;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .retro-year-table {
+    width: 95%;
+  }
+  
+  .history-chump-image {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .retro-image-cell {
+    width: 110px;
+  }
+  
+  .retro-name-cell,
+  .retro-date-cell,
+  .retro-streak-cell {
+    width: auto;
+  }
+  
+  .cobweb-left,
+  .cobweb-right,
+  .year-icon-left,
+  .year-icon-right {
+    height: 50px;
+  }
+  
+  .year-text {
+    font-size: x-large;
+  }
+}
+
+@media (max-width: 480px) {
+  .history-chump-image {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .retro-image-cell {
+    width: 80px;
+  }
+  
+  .cobweb-left,
+  .cobweb-right,
+  .year-icon-left,
+  .year-icon-right {
+    height: 35px;
+  }
+  
+  .year-text {
+    font-size: large;
+  }
+  
+  .history-header-title img {
+    height: 40px;
+  }
+}

@@ -1,0 +1,197 @@
+{% extends "1990/_layout.html" %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/1990/history.css' %}" />
+
+<div id="history_inner_body">
+  <script>
+    // Pass backgroundImages from Django context
+    const backgroundImages = {{ background_images|safe }};
+    
+    class BackgroundCycler {
+      constructor() {
+        this.currentImageIndex = Math.floor(
+          Math.random() * backgroundImages.length
+        );
+        this.backgroundElement = document.getElementsByClassName(
+          "layout_content"
+        )[0];
+        console.log("backgroundElement", this.backgroundElement);
+        this.setupEventListeners();
+        this.updateBackground();
+      }
+
+      setupEventListeners() {
+        console.log("setupEventListeners");
+        window.addEventListener("keydown", event => {
+          if (event.key === "ArrowLeft") {
+            this.previousImage();
+          } else if (event.key === "ArrowRight") {
+            this.nextImage();
+          }
+        });
+
+        document
+          .getElementById("prev-btn")
+          ?.addEventListener("click", () => this.previousImage());
+        document
+          .getElementById("next-btn")
+          ?.addEventListener("click", () => this.nextImage());
+      }
+
+      previousImage() {
+        console.log("previousImage");
+        this.currentImageIndex =
+          (this.currentImageIndex - 1 + backgroundImages.length) %
+          backgroundImages.length;
+        this.updateBackground();
+      }
+
+      nextImage() {
+        console.log("nextImage");
+        this.currentImageIndex =
+          (this.currentImageIndex + 1) % backgroundImages.length;
+        this.updateBackground();
+      }
+
+      updateBackground() {
+        console.log("updateBackground");
+        if (this.backgroundElement) {
+          const img = new Image();
+          img.src = backgroundImages[this.currentImageIndex];
+          img.onload = () => {
+            this.backgroundElement.style.backgroundImage = `url('${img.src}')`;
+          };
+        }
+      }
+    }
+    
+    // run after page load
+    window.onload = () => new BackgroundCycler();
+  </script>
+
+  <!-- Navigation buttons -->
+  <div class="history-nav-buttons">
+    <img
+      id="prev-btn"
+      src="{% static 'images/general/previous.gif' %}"
+      alt="Previous Background"
+    />
+    <img
+      id="next-btn"
+      src="{% static 'images/general/next_skellington.gif' %}"
+      alt="Next Background"
+    />
+  </div>
+  
+  <div class="history-instructions">
+    <font face="arial, helvetica" color="#FFFFFF" size="+2">
+      Use the <strong>Arrow Keys</strong> or click the buttons to change the background!!
+    </font>
+  </div>
+
+  <center>
+    <!-- Header table with standard grey borders -->
+    <table class="history-header-table" border="1" cellspacing="2" cellpadding="4">
+      <tbody>
+        <tr>
+          <td class="history-header-title" colspan="2" align="center" valign="middle">
+            <p align="center">
+              <font face="arial, helvetica">
+                <font color="#FFFFFF" size="+3">
+                  <strong>
+                    <img src="{% static 'images/general/HISTORY_B.gif' %}" alt="line" />
+                    of failed attemptes at taking down monty!!
+                  </strong>
+                </font>
+              </font>
+            </p>
+            <img src="{% static 'images/1990/go.gif' %}" alt="line" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center">
+            <font face="arial, helvetica">&nbsp;</font>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <hr class="history-hr" />
+
+    <!-- Year tables with standard grey borders -->
+    {% for chump_year in chumps_by_year %}
+      <table class="retro-year-table" border="1" cellspacing="2" cellpadding="4">
+        <tbody>
+          <tr class="retro-year-header">
+            <td colspan="2" align="center" valign="middle">
+              <font face="arial, helvetica">
+                <div>
+                  <img class="cobweb-left" src="{% static 'images/1990/cobweb_nw.gif' %}" alt="line" />
+                  <img class="cobweb-right" src="{% static 'images/1990/cobweb_ne.gif' %}" alt="line" />
+                </div>
+                <font class="year-text">
+                  <strong>
+                    <img class="year-icon-left" src="{% static 'images/general/my_boy.gif' %}" alt="line" />
+                    {{ chump_year.year }}
+                    <img class="year-icon-right" src="{% static 'images/1990/mouse.gif' %}" alt="line" />
+                  </strong>
+                </font>
+              </font>
+            </td>
+          </tr>
+        
+        {% for chump in chump_year.chumps %}
+            <tr>
+              <td class="retro-image-cell" rowspan="3" align="center" valign="middle">
+                <a href="{{ chump.media.0.url }}" target="_blank">
+                  <img class="history-chump-image" src="{{ chump.media.0.url }}" alt="{{ chump.name }}" />
+                </a>
+              </td>
+              <td class="retro-name-cell">
+                <font face="arial, helvetica">
+                  <large>
+                    <font color="#FFFFFF">
+                      <a href="{{ chump.url }}" target="_blank">{{ chump.name }}</a>
+                    </font>
+                  </large>
+                </font>
+              </td>
+            </tr>
+            <tr>
+              <td class="retro-date-cell">
+                <font face="arial, helvetica">
+                  <small>
+                    <font color="#FFFFFF">
+                      <br />
+                      {{ chump.localised_date }}
+                    </font>
+                  </small>
+                </font>
+              </td>
+            </tr>
+            <tr>
+              <td class="retro-streak-cell">
+                <font face="arial, helvetica">
+                  <small>
+                    <font color="#FFFFFF">
+                      {{ chump.streak }} days <br />
+                      {{ chump.thanks }}
+                    </font>
+                  </small>
+                </font>
+              </td>
+            </tr>
+            <tr class="retro-separator-row">
+              <td colspan="2" align="center" class="retro-separator-cell">
+              </td>
+            </tr>
+        {% endfor %}
+                </tbody>
+      </table>
+    {% endfor %}
+  </center>
+</div>
+
+{% endblock %}
