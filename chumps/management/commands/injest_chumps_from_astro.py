@@ -37,7 +37,9 @@ class Command(BaseCommand):
                 name=chump_data['name'],
                 date=chump_data['date'],
                 defaults={
-                    'thanks': chump_data['thanks'],
+                    # Some chump entries have explicit `null` thanks, which violates
+                    # DB constraint.
+                    'thanks': chump_data['thanks'] or '',
                     'url': chump_data['url'],
                     'slug': chump_data['slug']
                 }

@@ -115,6 +115,8 @@ USE_TZ = True
 
 STATIC_ROOT = ''
 STATIC_URL = 'static/'
-STATICFILES_DIRS = ('static',)
+# Static files are under chumps/static which is
+# included by INSTALLED_APPS
+# STATICFILES_DIRS = ('static',)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
