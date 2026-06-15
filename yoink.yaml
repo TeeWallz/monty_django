@@ -16,9 +16,13 @@ services:
   - name: monty-django
     image: ghcr.io/nrhtr/monty_django
     tag: latest
-    # frontend/vanity domain
-    domain: vm-monty.nix03.jenga.xyz
-    tls: "off"   # 'host' Caddy terminates TLS before it hands off to guest :/
+    # frontend/vanity domain(s)
+    domain:
+      - howmanydayssincemontaguestreetbridgehasbeenhit.com
+      - vm-monty.nix03.jenga.xyz
+    tls: cert            # yoink proxy terminates TLS; CF (Full) -> origin:8443 -> VM:443
+    tls_cert_secret: TLS_CERT
+    tls_key_secret: TLS_KEY
     run:
       port: 8000
       healthcheck_path: /health
@@ -31,7 +35,7 @@ services:
       - SECRET_KEY
     env:
       # add vanity domain here! (comma-separated)
-      ALLOWED_HOSTS: vm-monty.nix03.jenga.xyz
-      CSRF_TRUSTED_ORIGINS: https://vm-monty.nix03.jenga.xyz
+      ALLOWED_HOSTS: howmanydayssincemontaguestreetbridgehasbeenhit.com,vm-monty.nix03.jenga.xyz
+      CSRF_TRUSTED_ORIGINS: https://howmanydayssincemontaguestreetbridgehasbeenhit.com,https://vm-monty.nix03.jenga.xyz
       DEBUG: "false"
       DB_DIR: /app/db
