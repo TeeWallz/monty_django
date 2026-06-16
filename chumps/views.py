@@ -1,9 +1,13 @@
 # views.py
+from pathlib import Path
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.templatetags.static import static
 import datetime
 import json
 from .models import Chump
+
+APP_DIR = Path(__file__).resolve().parent
 from .services import (
     get_chumps, 
     get_streak_status, 
@@ -40,11 +44,9 @@ def history(request):
     # Get chumps grouped by year
     chumps_by_year = get_chumps_by_year()
     
-    # read background image json from static folder
-    with open('chumps/static/images/bg/backgrounds.json') as f:
-        background_images = json.load(f)
-        # append the static path to each image
-        background_images = [f'/static/images/bg/bgg/{img}' for img in background_images]
+    # read background image list from data folder
+    with open(APP_DIR / 'data' / 'backgrounds.json') as f:
+        background_images = [static(f'images/bg/bgg/{img}') for img in json.load(f)]
     
     return render(request, '1990/history.html', {
         'chumps': get_chumps(),
