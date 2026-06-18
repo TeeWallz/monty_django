@@ -19,6 +19,7 @@ services:
     # frontend/vanity domain(s)
     domain:
       - howmanydayssincemontaguestreetbridgehasbeenhit.com
+      - dev.howmanydayssincemontaguestreetbridgehasbeenhit.com
       - vm-monty.nix03.jenga.xyz
     tls: cert            # yoink proxy terminates TLS; CF (Full) -> origin:8443 -> VM:443
     tls_cert_secret: TLS_CERT
@@ -35,7 +36,7 @@ services:
       - SECRET_KEY
     env:
       # add vanity domain here! (comma-separated)
-      ALLOWED_HOSTS: howmanydayssincemontaguestreetbridgehasbeenhit.com,vm-monty.nix03.jenga.xyz
-      CSRF_TRUSTED_ORIGINS: https://howmanydayssincemontaguestreetbridgehasbeenhit.com,https://vm-monty.nix03.jenga.xyz
+      ALLOWED_HOSTS: howmanydayssincemontaguestreetbridgehasbeenhit.com,dev.howmanydayssincemontaguestreetbridgehasbeenhit.com,vm-monty.nix03.jenga.xyz
+      CSRF_TRUSTED_ORIGINS: https://howmanydayssincemontaguestreetbridgehasbeenhit.com,https://dev.howmanydayssincemontaguestreetbridgehasbeenhit.com,https://vm-monty.nix03.jenga.xyz
       DEBUG: "false"
       DB_DIR: /app/db
