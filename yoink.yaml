@@ -8,6 +8,7 @@ secrets:
   provider: age
   recipients:
     - age1sj0dvy9cyqq62paxw0pkhaxchteduqkedu7w6lt5e7rcnsx0rsrqeuveac
+    - age10amvpzew86hrjrvdekkwryauuppe9hn7rhl9p63ac7rwmkpsuvsqxu90gm
 
 proxy:
   enabled: true
