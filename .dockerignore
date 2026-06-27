@@ -10,4 +10,8 @@ media/
 .env*
 secrets.age
 yoink.yaml
-.DS_Store
+.direnv/
+.envrc
+flake.nix
+Makefile
+deploy-dev.sh

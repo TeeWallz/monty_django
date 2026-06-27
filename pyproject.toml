@@ -6,6 +6,8 @@ readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
     "django>=6.0.3",
+    "django-countries>=9.0.0",
+    "django-simple-captcha>=0.6.3",
     "pillow>=12.1.1",
     "requests>=2.33.1",
     "whitenoise>=6.12.0",

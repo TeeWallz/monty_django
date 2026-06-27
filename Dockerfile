@@ -2,6 +2,10 @@ FROM python:3.14-slim AS builder
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libz-dev libjpeg-dev libfreetype6-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 ENV UV_LINK_MODE=copy \
@@ -15,10 +19,15 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 
 COPY . .
 
-RUN SECRET_KEY=build .venv/bin/python manage.py collectstatic --noinput
+RUN SECRET_KEY=build .venv/bin/python manage.py collectstatic --noinput && \
+    find /app -maxdepth 2 -name 'static' -type d -exec rm -rf {} + && \
+    chmod +x /app/entrypoint.sh
 
 FROM python:3.14-slim
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libjpeg62-turbo libfreetype6 \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN useradd --uid 1500 --no-create-home app && \
     mkdir -p /tmp && chmod 1777 /tmp
@@ -30,24 +39,16 @@ ENV PATH="/app/.venv/bin:$PATH" \
     TMPDIR=/dev/shm \
     HOME=/tmp
 
-# try not to bust the cache...
-# python dependencies
 COPY --from=builder --chown=app:app /app/.venv .venv
-
-# collected static files
 COPY --from=builder --chown=app:app /app/staticfiles staticfiles
-
-# app code and everything else
-COPY --chown=app:app manage.py ./
-COPY --chown=app:app monty_project monty_project
-COPY --chown=app:app chumps/data chumps/data
-COPY --chown=app:app chumps/management chumps/management
-COPY --chown=app:app chumps/migrations chumps/migrations
-COPY --chown=app:app chumps/templates chumps/templates
-COPY --chown=app:app chumps/*.py chumps/
+COPY --from=builder --chown=app:app /app/entrypoint.sh .
+COPY --from=builder --chown=app:app /app/manage.py .
+COPY --from=builder --chown=app:app /app/monty_project monty_project
+COPY --from=builder --chown=app:app /app/chumps chumps
+COPY --from=builder --chown=app:app /app/guestbook guestbook
 
 USER app
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--worker-tmp-dir", "/dev/shm", "--no-control-socket", "monty_project.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["/app/entrypoint.sh"]
