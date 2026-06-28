@@ -1,4 +1,4 @@
-.PHONY: help migrate apply serve serve_admin env deploy
+.PHONY: help migrate apply serve serve_admin env deploy-dev
 
 .DEFAULT_GOAL := help
 
@@ -8,8 +8,8 @@ help:  ## Show this help message
 	@echo "Available commands:"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2}'
 
-deploy:  ## Build, push, and deploy with yoink
-	./deploy.sh
+deploy-dev:  ## Build, push, and deploy to dev with yoink
+	./deploy-dev.sh
 
 env:  ## Create .env file from example
 	cp .env.example .env

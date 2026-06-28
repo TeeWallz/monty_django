@@ -20,17 +20,19 @@ def chumps_api(request):
     return JsonResponse(get_chumps(), safe=False)
 
 def index(request):
+    chumps = get_chumps()
     return render(request, 'index.html', {
-        'chumps': get_chumps(),
-        "streak_status": get_streak_status(get_chumps()[0]['streak']),
-        "stats": get_stats(get_chumps()),
+        'chumps': chumps,
+        "streak_status": get_streak_status(chumps[0]['streak']) if chumps else None,
+        "stats": get_stats(chumps),
     })
 
 def index_1990(request):
+    chumps = get_chumps()
     return render(request, '1990/index.html', {
-        'chumps': get_chumps(),
-        "streak_status": get_streak_status(get_chumps()[0]['streak']),
-        "stats": get_stats(get_chumps()),
+        'chumps': chumps,
+        "streak_status": get_streak_status(chumps[0]['streak']) if chumps else None,
+        "stats": get_stats(chumps),
     })
 
 def entry_1990(request):

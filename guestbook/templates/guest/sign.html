@@ -1,0 +1,132 @@
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Guestbook - How Many Days Since The Montague Street Bridge Has Been Hit?</title>
+        <meta name="description"
+              content="How Many Days Since The Montague Street Bridge Has Been Hit? ">
+        <meta name="keywords"
+              content="How Many Days Since The Montague Street Bridge Has Been Hit?">
+        <link rel="icon" href="{% static 'images/bg/bgg/favicon.ico' %}" />
+        <link rel="stylesheet" href="{% static 'css/guestbook.css' %}" />
+        <script>
+            function SetSmiley(which) {
+                const msgInput = document.getElementById('id_message');
+                if (!msgInput) return;
+
+                const start = msgInput.selectionStart;
+                const end = msgInput.selectionEnd;
+                msgInput.value = msgInput.value.substring(0, start) + which + msgInput.value.substring(end);
+                msgInput.selectionStart = msgInput.selectionEnd = start + which.length;
+                msgInput.focus();
+            }
+
+            function textCounter(field, countfield, maxlimit) {
+                if (field.value.length > maxlimit) {
+                    field.value = field.value.substring(0, maxlimit);
+                } else {
+                    countfield.value = maxlimit - field.value.length;
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelector('.captcha').addEventListener('click', function() {
+                    fetch('/captcha/refresh/', {
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        })
+                        .then(r => r.json())
+                        .then(result => {
+                            document.querySelector('.captcha').src = result.image_url;
+                            document.getElementById('id_captcha_0').value = result.key;
+                        });
+                });
+
+            });
+        </script>
+    </head>
+    <body>
+        <div id="container">
+            <center>
+                <span class="head-text">
+                    {% comment %}
+      <img id="header" src="{% static 'images/Thanks33.gif' %}" />
+      <img id="header" src="{% static 'images/guestbook_md_wht.gif' %}" />
+      <img id="header" src="{% static 'images/guestbookpencil.gif' %}" />
+                    {% endcomment %}
+                </span>
+                <br />
+                <a href="{% url 'index_view' %}">View Guestbook</a>
+                <br />
+                <br />
+                <form name="newentry" method="post" action="" novalidate>
+                    {% csrf_token %}
+                    <table width="550" class="tableborder">
+                        <tr>
+                            <td class="text" align="left">Name*</td>
+                            <td class="text" align="left">{{ form.name }}{{ form.name.errors }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text" align="left">E-mail</td>
+                            <td class="text" align="left">{{ form.email }}{{ form.email.errors }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text" align="left">Location</td>
+                            <td class="text" align="left">
+                                {{ form.location }}
+                                <input readonly
+                                       type="text"
+                                       name="remLen"
+                                       size="4"
+                                       maxlength="4"
+                                       value="1500">
+                                <small>characters left</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign='top' class="text" align="left">Message*</td>
+                            <td class="text" align="left">
+                                <textarea id="id_message"
+                                          name="message"
+                                          cols="50"
+                                          rows="12"
+                                          onKeyDown="textCounter(this.form.message,this.form.remLen,1500)"
+                                          onKeyUp="textCounter(this.form.message,this.form.remLen,1500)"></textarea>{{ form.message.errors }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="text" align="left">Smilies</td>
+                            <td class="text" align="left">
+                                {% for smiley in smilies %}
+                                    <a href="#"
+                                       class="smiley-link"
+                                       onclick="SetSmiley(' {{ smiley.emoticon }} '); return false;"
+                                       ONFOCUS="filter:blur();">
+                                        <img src="{{ smiley.url }}" border="0" alt="{{ smiley.alt }}">
+                                    </a>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text" align="left">Verification Code*</td>
+                            <td class="text" align="left">{{ form.captcha }}{{ form.captcha.errors }}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="text" align="left">
+                                <!-- change type submit to button to enable verification: onclick="verify();" -->
+                                <input type="submit" name="post" value="Post Message" class="submit-btn">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <!--  closing container -->
+            </center>
+        </div>
+    </body>
+</html>

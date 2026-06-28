@@ -1,0 +1,95 @@
+{% load static %}
+{% load tz %}
+{% load guestbook_tags %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Guestbook - How Many Days Since The Montague Street Bridge Has Been Hit?</title>
+        <meta name="description"
+              content="Sign the Montague Street Bridge guestbook." />
+        <meta name="keywords"
+              content="How Many Days Since The Montague Street Bridge Has Been Hit?">
+        <link rel="icon" href="{% static 'images/bg/bgg/favicon.ico' %}" />
+        <link rel="stylesheet" href="{% static 'css/guestbook.css' %}" />
+    </head>
+    <body>
+        <div>
+            <div class="header">
+                <img src="{% static 'images/guestbook_md_wht.gif' %}"
+                     width="120"
+                     height="100"
+                     alt="Guestbook" />
+                <img src="{% static 'images/guestbookpencil.gif' %}"
+                     width="90"
+                     height="108"
+                     alt="" />
+            </div>
+            <p class="centered">
+                <img src="{% static 'images/img344.gif' %}"
+                     width="36"
+                     height="35"
+                     class="inline-img"
+                     alt="" />
+                <a href="{% url 'sign_view' %}">Sign Guestbook</a>
+            </p>
+            {% if is_posted %}
+                <div class="thanks">
+                    <img src="{% static 'images/Thanks33.gif' %}"
+                         width="350"
+                         height="150"
+                         alt="Thank you for signing!" />
+                </div>
+            {% endif %}
+            <div class="entries">
+                {% for e in page_obj %}
+                    <table width="468" class="tableborder">
+                        <tr class="message_background">
+                            <td align="left" class="text" width="65">
+                                <strong>Name</strong>
+                            </td>
+                            <td width="385" align="left" class="text">{{ e.name }}</td>
+                        </tr>
+                        <tr>
+                            <td align="left" class="text">
+                                <strong>Date</strong>
+                            </td>
+                            <td align="left"
+                                class="text local-time"
+                                data-utc="{{ e.published|date:'Y-m-d' }}">{{ e.published|date:'d/m/Y' }}</td>
+                        </tr>
+                        <tr>
+                            <td align="left" class="text">
+                                <strong>Location</strong>
+                            </td>
+                            <td align="left" class="text">
+                                <img src="{{ e.location.flag }}"
+                                     height="12"
+                                     width="20"
+                                     border="0"
+                                     alt="{{ e.location.name }}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top" align="left" class="text">
+                                <strong>Message</strong>
+                            </td>
+                            <td align="left" class="text">{{ e.message|render_smilies }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer-nav">
+                {% endfor %}
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">« first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="current">page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last »</a>
+                {% endif %}
+            </div>
+        </div>
+    </body>
+</html>

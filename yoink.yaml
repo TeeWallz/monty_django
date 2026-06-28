@@ -20,9 +20,7 @@ services:
     # frontend/vanity domain(s)
     domain:
       - howmanydayssincemontaguestreetbridgehasbeenhit.com
-      - dev.howmanydayssincemontaguestreetbridgehasbeenhit.com
-      - vm-monty.nix03.jenga.xyz
-    tls: cert            # yoink proxy terminates TLS; CF (Full) -> origin:8443 -> VM:443
+    tls: cert
     tls_cert_secret: TLS_CERT
     tls_key_secret: TLS_KEY
     run:
@@ -37,7 +35,32 @@ services:
       - SECRET_KEY
     env:
       # add vanity domain here! (comma-separated)
-      ALLOWED_HOSTS: howmanydayssincemontaguestreetbridgehasbeenhit.com,dev.howmanydayssincemontaguestreetbridgehasbeenhit.com,vm-monty.nix03.jenga.xyz
-      CSRF_TRUSTED_ORIGINS: https://howmanydayssincemontaguestreetbridgehasbeenhit.com,https://dev.howmanydayssincemontaguestreetbridgehasbeenhit.com,https://vm-monty.nix03.jenga.xyz
+      ALLOWED_HOSTS: howmanydayssincemontaguestreetbridgehasbeenhit.com
+      CSRF_TRUSTED_ORIGINS: https://howmanydayssincemontaguestreetbridgehasbeenhit.com
+      DEBUG: "false"
+      DB_DIR: /app/db
+  - name: dev-monty-django
+    image: ghcr.io/nrhtr/monty_django
+    tag: latest
+    domain:
+      - dev.howmanydayssincemontaguestreetbridgehasbeenhit.com
+      - vm-monty.nix03.jenga.xyz
+    tls: cert
+    tls_cert_secret: TLS_CERT
+    tls_key_secret: TLS_KEY
+    run:
+      port: 8000
+      healthcheck_path: /health
+      options:
+        user: "1500:1500"
+      volumes:
+        - /var/data/monty-dev/media:/app/media
+        - /var/data/monty-dev/db:/app/db
+    secrets:
+      - SECRET_KEY
+    env:
+      # add vanity domain here! (comma-separated)
+      ALLOWED_HOSTS: dev.howmanydayssincemontaguestreetbridgehasbeenhit.com,vm-monty.nix03.jenga.xyz
+      CSRF_TRUSTED_ORIGINS: https://dev.howmanydayssincemontaguestreetbridgehasbeenhit.com,https://vm-monty.nix03.jenga.xyz
       DEBUG: "false"
       DB_DIR: /app/db

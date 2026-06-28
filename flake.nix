@@ -16,11 +16,13 @@
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
+          pythonVersion = pkgs.lib.strings.trim (builtins.readFile ./.python-version);
+          versionAttr = builtins.replaceStrings [ "." ] [ "" ] pythonVersion;
         in
         {
           default = pkgs.mkShell {
             packages = [
-              pkgs.python3
+              pkgs."python${versionAttr}"
               pkgs.uv
             ];
 
